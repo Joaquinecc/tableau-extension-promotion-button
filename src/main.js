@@ -10,7 +10,6 @@
 
         
         $("#btn-prom").click(function(){
-           console.log("Entre")
            loadTable()
         }); 
       // Tell Tableau we'd like to initialize our extension
@@ -27,17 +26,21 @@
     }
      const worksheetName= "Recomendacion promocion"
      const worksheet = getSelectedSheet(worksheetName);
+     console.log("Entre")
      
      worksheet.getSummaryDataAsync().then(function(dataTable ){
       console.log("dataTable",dataTable );
-      let columns=dataTable._columns.map(item=>item?._fieldName)
-
       let data=dataTable._data.map(dataItem=>{
-        let tempData={}
-        dataItem.forEach((item,index)=>tempData[columns[index]]=item._value)
-        return tempData
+        return {
+          cod_cliente:dataItem[0]._value,
+          articulocodigo:dataItem[3]._value,
+          rank:dataItem[10]._value,
+          weight:dataItem[9]._value,
+          
+        }
       })
       console.log("data",data)
+      post(data)
      });
 
 /**     worksheet.getUnderlyingTableDataAsync().then(function(logicalTables  ){
@@ -55,5 +58,27 @@
         });
     }
        
+ }
+
+ function post(data){
+
+
+  $.ajax({
+    type: "POST",
+    url: "http://localhost:8000/promotion/",
+    data: JSON.stringify(data),
+    contentType: "application/json",
+    success: function (result) {
+      console.log(result);
+    },
+    error: function (result, status) {
+      console.log(result);
+    }
+ });
+
+
+
+
+
  }
 })();
