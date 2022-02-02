@@ -3,16 +3,16 @@
 // Wrap everything in an anonymous function to avoid polluting the global namespace
 (function() {
 
-
+    var promotionName=""
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
         // Add your startup code here
-
-
-
-        
         $("#btn-prom").click(function(){
+          promotionName= $( "#name-input" ).val();
+          if(promotionName.length >0){
            loadTable()
+          }
+          else alert("Ingresar un nombre a la promoción")
         }); 
       // Tell Tableau we'd like to initialize our extension
       tableau.extensions.initializeAsync().then(function() {
