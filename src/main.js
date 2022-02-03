@@ -2,10 +2,11 @@
 
 // Wrap everything in an anonymous function to avoid polluting the global namespace
 (function() {
-
+    const API_HOST="http://localhost:8000/"
     var promotionName=""
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
+      console.log(process.env);
         // Add your startup code here
         $("#btn-prom").click(function(){
           promotionName= $( "#name-input" ).val();
@@ -64,7 +65,7 @@
   $('#btn-label').addClass('hidden');
     $.ajax({
       type: "POST",
-      url: "http://localhost:8000/promotion/",
+      url: API_HOST+"promotion/",
       data: JSON.stringify(data),
       contentType: "application/json",
       success: function (result) {
