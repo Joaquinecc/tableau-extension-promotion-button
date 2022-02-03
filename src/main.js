@@ -34,7 +34,7 @@
           articulocodigo:dataItem[3]._value,
           rank:dataItem[10]._value,
           weight:dataItem[9]._value,
-          
+          prom_name:promotionName,
         }
       })
       console.log("data",data)
@@ -60,24 +60,25 @@
 
 
  function post(data){
-
-
-  $.ajax({
-    type: "POST",
-    url: "http://localhost:8000/promotion/",
-    data: JSON.stringify(data),
-    contentType: "application/json",
-    success: function (result) {
-      console.log(result);
-    },
-    error: function (result, status) {
-      console.log(result);
-    }
- });
-
-
-
-
-
+  $('#loading').removeClass('hidden')
+  $('#btn-label').addClass('hidden');
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8000/promotion/",
+      data: JSON.stringify(data),
+      contentType: "application/json",
+      success: function (result) {
+        alert("La solicitud se completo con éxito")
+        console.log(result);
+        $('#loading').addClass('hidden')
+        $('#btn-label').removeClass('hidden');
+      },
+      error: function (result, status) {
+        alert("Ha ocurrido un error \n",result)
+        console.log(result);
+        $('#loading').addClass('hidden')
+        $('#btn-label').removeClass('hidden');
+      }
+  });
  }
 })();
