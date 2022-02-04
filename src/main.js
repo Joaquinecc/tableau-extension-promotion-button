@@ -7,18 +7,25 @@
     var envVar =""
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
-        //store setting variables to envVar
-        getVarEnv()
+      getVarEnv()
+
+
+        // Add your startup code here
         $("#btn-prom").click(function(){
+        
           promotionName= $( "#name-input" ).val();
           if(promotionName.length >0){
+  
             loadTable()
+
           }
           else alert("Ingresar un nombre a la promoción")
         }); 
       // Tell Tableau we'd like to initialize our extension
       tableau.extensions.initializeAsync().then(function() {
-        loadCurrentUser()
+
+        // Once the extension is initialized, ask the user to choose a sheet
+        currentUser=loadCurrentUser()
     });  
     });
     function loadCurrentUser(){
@@ -27,7 +34,7 @@
         const worksheet = getSelectedSheet(worksheetName);
         
         worksheet.getSummaryDataAsync().then(function(userData ){
-           currentUser= userData.data[0][0]._value 
+           return userData.data[0][0]._value 
           
         });
       }catch{
@@ -69,6 +76,7 @@
 
 
  function post(data){
+   console.log("envVar",envVar)
   $('#loading').removeClass('hidden')
   $('#btn-label').addClass('hidden');
     $.ajax({
@@ -95,10 +103,17 @@
 
   function getVarEnv(){
     $.getJSON( "../var-env.json", function( data ) {
+      console.log("data",data);
       envVar= data
     })
 
   }
+
+
+
+
+
+
 
 
  
