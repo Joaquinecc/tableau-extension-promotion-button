@@ -25,7 +25,7 @@
       tableau.extensions.initializeAsync().then(function() {
 
         // Once the extension is initialized, ask the user to choose a sheet
-        currentUser=loadCurrentUser()
+        loadCurrentUser()
     });  
     });
     function loadCurrentUser(){
@@ -34,7 +34,7 @@
         const worksheet = getSelectedSheet(worksheetName);
         
         worksheet.getSummaryDataAsync().then(function(userData ){
-           return userData.data[0][0]._value 
+          currentUser= userData.data[0][0]._value 
           
         });
       }catch{
@@ -76,7 +76,6 @@
 
 
  function post(data){
-   console.log("envVar",envVar)
   $('#loading').removeClass('hidden')
   $('#btn-label').addClass('hidden');
     $.ajax({
@@ -103,7 +102,6 @@
 
   function getVarEnv(){
     $.getJSON( "../var-env.json", function( data ) {
-      console.log("data",data);
       envVar= data
     })
 
