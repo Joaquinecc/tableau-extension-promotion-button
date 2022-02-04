@@ -13,3 +13,4 @@ dist/
 # ignore local npmrc files
 .npmrc
 var-env.json
+*.pem
