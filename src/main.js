@@ -2,34 +2,47 @@
 
 // Wrap everything in an anonymous function to avoid polluting the global namespace
 (function() {
-  getVarEnv()
     var promotionName=""
-    const envVar =getVarEnv()
+    var currentUser=""
+    var envVar =""
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
-      console.log(process.env);
-        // Add your startup code here
+        //store setting variables to envVar
+        getVarEnv()
         $("#btn-prom").click(function(){
           promotionName= $( "#name-input" ).val();
           if(promotionName.length >0){
-           loadTable()
+            loadTable()
           }
           else alert("Ingresar un nombre a la promoción")
         }); 
       // Tell Tableau we'd like to initialize our extension
       tableau.extensions.initializeAsync().then(function() {
-        // Once the extension is initialized, ask the user to choose a sheet
+        loadCurrentUser()
     });  
     });
+    function loadCurrentUser(){
+      try{
+        const worksheetName= "currentUserSheet"
+        const worksheet = getSelectedSheet(worksheetName);
+        
+        worksheet.getSummaryDataAsync().then(function(userData ){
+           currentUser= userData.data[0][0]._value 
+          
+        });
+      }catch{
+        return "not-found"
+      }
+ 
+ 
+  }
 
  function loadTable(){
 
      const worksheetName= "Recomendacion promocion"
      const worksheet = getSelectedSheet(worksheetName);
-     console.log("Entre",tableau.extensions.dashboardContent.dashboard)
      
      worksheet.getSummaryDataAsync().then(function(dataTable ){
-      console.log("dataTable",dataTable );
       let data=dataTable._data.map(dataItem=>{
         return {
           cod_cliente:dataItem[0]._value,
@@ -37,9 +50,9 @@
           rank:dataItem[10]._value,
           weight:dataItem[9]._value,
           prom_name:promotionName,
+          username:currentUser
         }
       })
-      console.log("data",data)
       post(data)
      });
 
@@ -82,16 +95,10 @@
 
   function getVarEnv(){
     $.getJSON( "../var-env.json", function( data ) {
-      return data
+      envVar= data
     })
 
   }
-
-
-
-
-
-
 
 
  
