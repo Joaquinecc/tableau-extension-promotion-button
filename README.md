@@ -31,3 +31,9 @@ In the local directory create a var-env.json. This file is meant to be used as a
     "api_url":"api url https post request"
 }
 ```
+Modify the url FROM  file src/main.trex to the url host. By default is localhost
+```
+    <source-location>
+      <url>HOST-URL/src/main.html</url>
+    </source-location>
+```
