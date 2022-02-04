@@ -2,8 +2,9 @@
 
 // Wrap everything in an anonymous function to avoid polluting the global namespace
 (function() {
-    const API_HOST="http://localhost:8000/"
+  getVarEnv()
     var promotionName=""
+    const envVar =getVarEnv()
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
       console.log(process.env);
@@ -42,13 +43,7 @@
       post(data)
      });
 
-/**     worksheet.getUnderlyingTableDataAsync().then(function(logicalTables  ){
-        console.log("dataTable",logicalTables );
-      }); */
 
-
-
-       
  }
  function getSelectedSheet(worksheetName) {
   // Go through all the worksheets in the dashboard and find the one we want
@@ -65,7 +60,7 @@
   $('#btn-label').addClass('hidden');
     $.ajax({
       type: "POST",
-      url: API_HOST+"promotion/",
+      url: envVar.api_url,
       data: JSON.stringify(data),
       contentType: "application/json",
       success: function (result) {
@@ -82,4 +77,22 @@
       }
   });
  }
+
+
+
+  function getVarEnv(){
+    $.getJSON( "../var-env.json", function( data ) {
+      return data
+    })
+
+  }
+
+
+
+
+
+
+
+
+ 
 })();
