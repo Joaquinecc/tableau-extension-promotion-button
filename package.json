@@ -5,6 +5,7 @@
   "scripts": {
     "build": "npm install && npm run lint && webpack --config webpack.config.js",
     "start": "node node_modules/http-server/bin/http-server -p 8765 -c-1",
+    "start-https": "node node_modules/http-server/bin/http-server -p 8765 -c-1 -S",
     "start-sandbox": "npx tabextsandbox --config sandbox-config.json",
     "lint": "npm run jslint && npm run tslint",
     "jslint": "semistandard ./Samples/*/*.js",
