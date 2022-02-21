@@ -6,6 +6,13 @@
     var currentUser=""
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
+      //Listen on local storage
+      window.onstorage = () => {
+        // When local storage changes, update table
+        populateDataTable()
+    
+      };
+
       // Tell Tableau we'd like to initialize our extension
       tableau.extensions.initializeAsync().then(function() {
 

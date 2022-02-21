@@ -2,12 +2,14 @@
 
 // Wrap everything in an anonymous function to avoid polluting the global namespace
 (function() {
-    var promotionName=""
+
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
         $("#btn-prom").click(function(){
+          console.log("Click button");
+          localStorage.setItem('update flag variable', Math.floor(Math.random() * 99999));
           loadData("analisisGlobal.Articulos Recomendados")
-          alert("Se añadio al carro")
+          localStorage("Se añadio al carro")
         }); 
    
       // Tell Tableau we'd like to initialize our extension
