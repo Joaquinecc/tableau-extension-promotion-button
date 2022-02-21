@@ -8,8 +8,6 @@
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
       getVarEnv()
-
-
         // Add your startup code here
         $("#btn-prom").click(function(){
         
@@ -44,32 +42,31 @@
  
   }
 
- function loadTable(){
+  function loadTable(){
+      let data = localStorage.getItem("data")
+      if(!data) alert("Tabla vacia")
+      console.log("data",JSON.parse(data));
+      data=JSON.parse(data)
 
-     const worksheetName= "Recomendacion promocion"
-     const worksheet = getSelectedSheet(worksheetName);
-     
-     worksheet.getSummaryDataAsync().then(function(dataTable ){
-      let data=dataTable._data.map(dataItem=>{
+      data=data.map((dataItem )=>{
         return {
-          cod_cliente:dataItem[0]._value,
-          articulocodigo:dataItem[3]._value,
-          rank:dataItem[10]._value,
-          weight:dataItem[9]._value,
+          cod_cliente:dataItem.codigo_cliente,
+          articulocodigo:dataItem.articulocodigo,
+          rank:dataItem.rank,
+          weight:dataItem.weight,
           prom_name:promotionName,
           username:currentUser
         }
-      })
+      });
       post(data)
-     });
 
 
- }
- function getSelectedSheet(worksheetName) {
-  // Go through all the worksheets in the dashboard and find the one we want
-  return tableau.extensions.dashboardContent.dashboard.worksheets.find(function(sheet) {
-      return sheet.name === worksheetName;
-  });
+  }
+  function getSelectedSheet(worksheetName) {
+    // Go through all the worksheets in the dashboard and find the one we want
+    return tableau.extensions.dashboardContent.dashboard.worksheets.find(function(sheet) {
+        return sheet.name === worksheetName;
+    });
 }
 
 
