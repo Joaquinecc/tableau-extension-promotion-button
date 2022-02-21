@@ -39,6 +39,12 @@
 }
 
  function save(data){
+  let oldData= localStorage.getItem('data');
+  console.log("oldData",oldData);
+  if(oldData){
+    oldData=JSON.parse(oldData)
+    data = data.concat(oldData);
+  }
   localStorage.setItem('data', JSON.stringify(data));
  }
 
