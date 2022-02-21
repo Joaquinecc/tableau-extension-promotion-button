@@ -18,14 +18,14 @@
       
  function loadData(worksheetName){
      const worksheet = getSelectedSheet(worksheetName);
+
      worksheet.getSummaryDataAsync().then(function(dataTable ){
+     
+      console.log("dataTable",dataTable);
       let data=dataTable._data.map(dataItem=>{
-        return {
-          cod_cliente:dataItem[0]._value,
-          articulocodigo:dataItem[2]._value,
-          rank:dataItem[6]._value,
-          weight:dataItem[5]._value,
-        }
+        let temp={}
+        dataTable._columns.forEach((columnName,index)=>temp[columnName._fieldName]=dataItem[index]._value)
+        return temp
       })
       console.log("data",data);
 
