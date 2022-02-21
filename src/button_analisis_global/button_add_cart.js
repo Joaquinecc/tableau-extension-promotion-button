@@ -6,10 +6,10 @@
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
         $("#btn-prom").click(function(){
-          console.log("Click button");
           localStorage.setItem('update flag variable', Math.floor(Math.random() * 99999));
-          loadData("analisisGlobal.Articulos Recomendados")
-          localStorage("Se añadio al carro")
+          console.log("document.currentScript;",$("#script_button")[0].getAttribute('worksheetName'));
+          loadData($("#script_button")[0].getAttribute('worksheetName'))
+          alert("Se añadio al carro")
         }); 
    
       // Tell Tableau we'd like to initialize our extension
@@ -20,17 +20,12 @@
       
  function loadData(worksheetName){
      const worksheet = getSelectedSheet(worksheetName);
-
      worksheet.getSummaryDataAsync().then(function(dataTable ){
-     
-      console.log("dataTable",dataTable);
       let data=dataTable._data.map(dataItem=>{
         let temp={}
         dataTable._columns.forEach((columnName,index)=>temp[columnName._fieldName]=dataItem[index]._value)
         return temp
       })
-      console.log("data",data);
-
       save(data)
      });
 
