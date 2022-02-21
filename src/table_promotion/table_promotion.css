@@ -1,0 +1,21 @@
+
+body{
+    display: flex;
+    align-items: center; 
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-around;
+
+}
+.hidden{
+    display: none;
+}
+
+#btn-prom{
+    width: 100%;
+}
+#data_table_wrapper{
+    width: 98%;
+    height: 98%;
+    display: flex;
+}
