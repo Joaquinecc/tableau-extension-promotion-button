@@ -83,6 +83,12 @@
       success: function (result) {
         alert("La solicitud se completo con éxito")
         console.log(result);
+        //remove local storage data
+        localStorage.removeItem('data');
+        //update flag local variable, this force table_promotion to be updated
+        const update_flag= localStorage.getItem('update flag variable')
+        localStorage.setItem('update flag variable', parseInt(update_flag)?0:1);
+  
         $('#loading').addClass('hidden')
         $('#btn-label').removeClass('hidden');
       },

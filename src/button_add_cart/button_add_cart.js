@@ -6,8 +6,11 @@
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
         $("#btn-prom").click(function(){
-          localStorage.setItem('update flag variable', Math.floor(Math.random() * 99999));
-          console.log("document.currentScript;",$("#script_button")[0].getAttribute('worksheetName'));
+          //update flag local variable, this force table_promotion to be updated
+          const update_flag= localStorage.getItem('update flag variable')
+          localStorage.setItem('update flag variable', parseInt(update_flag)?0:1);
+
+          console.log("Click");
           loadData($("#script_button")[0].getAttribute('worksheetName'))
           alert("Se añadio al carro")
         }); 

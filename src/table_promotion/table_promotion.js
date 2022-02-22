@@ -13,6 +13,9 @@
     
       };
 
+      //remove any initial data ,if it is there
+      localStorage.removeItem('data');
+
       // Tell Tableau we'd like to initialize our extension
       tableau.extensions.initializeAsync().then(function() {
 
