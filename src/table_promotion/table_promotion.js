@@ -2,8 +2,6 @@
 
 // Wrap everything in an anonymous function to avoid polluting the global namespace
 (function() {
-    var promotionName=""
-    var currentUser=""
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
       //Listen on local storage
@@ -20,7 +18,6 @@
       tableau.extensions.initializeAsync().then(function() {
 
         // Once the extension is initialized, ask the user to choose a sheet
-        loadCurrentUser()
         populateDataTable()
     });  
     });
@@ -59,28 +56,6 @@
     }
 }
 
-
-function loadCurrentUser(){
-  try{
-    const worksheetName= "currentUserSheet"
-    const worksheet = getSelectedSheet(worksheetName);
-    
-    worksheet.getSummaryDataAsync().then(function(userData ){
-      currentUser= userData.data[0][0]._value 
-      
-    });
-  }catch{
-    return "not-found"
-  }
-
-
-}
- function getSelectedSheet(worksheetName) {
-  // Go through all the worksheets in the dashboard and find the one we want
-  return tableau.extensions.dashboardContent.dashboard.worksheets.find(function(sheet) {
-      return sheet.name === worksheetName;
-  });
-}
 
 
 
