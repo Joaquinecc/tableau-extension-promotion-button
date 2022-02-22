@@ -52,8 +52,8 @@
         return {
           cod_cliente:dataItem.codigo_cliente,
           articulocodigo:dataItem.articulocodigo,
-          rank:dataItem.rank,
-          weight:dataItem.weight,
+          rank:dataItem["SUMA(rank (ranking_producto))"],
+          weight:dataItem["SUMA(peso)"],
           prom_name:promotionName,
           username:currentUser
         }
