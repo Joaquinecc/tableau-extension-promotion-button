@@ -50,10 +50,10 @@
 
       data=data.map((dataItem )=>{
         return {
-          cod_cliente:dataItem.codigo_cliente,
+          cod_cliente:dataItem.cod_cliente,
           articulocodigo:dataItem.articulocodigo,
-          rank:dataItem["SUMA(rank (ranking_producto))"],
-          weight:dataItem["SUMA(peso)"],
+          rank:dataItem["SUM([rank (ranking_combination_sku_&_fam)])"],
+          weight:dataItem["SUM([weight (ranking_combination_sku_&_fam)]"],
           prom_name:promotionName,
           username:currentUser
         }
