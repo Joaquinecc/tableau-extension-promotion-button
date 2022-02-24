@@ -52,8 +52,8 @@
         return {
           cod_cliente:dataItem.cod_cliente,
           articulocodigo:dataItem.articulocodigo,
-          rank:dataItem["SUM([rank (ranking_combination_sku_&_fam)])"],
-          weight:dataItem["SUM([weight (ranking_combination_sku_&_fam)]"],
+          rank:dataItem["SUMA(rank (ranking_combination_sku_&_fam))"],
+          weight:dataItem["SUMA(weight (ranking_combination_sku_&_fam))"],
           prom_name:promotionName,
           username:currentUser
         }
@@ -115,7 +115,8 @@
 
 
 
-
+   
+     //"api_url":"http://10.35.70.39:8000/promotion/"
 
  
 })();
