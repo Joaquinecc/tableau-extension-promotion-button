@@ -2,18 +2,24 @@
 
 // Wrap everything in an anonymous function to avoid polluting the global namespace
 (function() {
+
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
       //Listen on local storage
       window.onstorage = () => {
         // When local storage changes, update table
         console.log("Storage value change");
-        populateDataTable()
+       // populateDataTable()
+       populateDataTable2()
     
       };
 
+
+      populateDataTable2()
+     
+
       //remove any initial data ,if it is there
-      localStorage.removeItem('data');
+      //localStorage.removeItem('data');
 
       // Tell Tableau we'd like to initialize our extension
       tableau.extensions.initializeAsync().then(function() {
@@ -23,7 +29,39 @@
     });  
     });
 
+  function populateDataTable2() {
+    var data= JSON.parse(localStorage.getItem("data"))
+    if (data?.length > 0){
+      //columns
+      let columnsName = Object.keys(data[0])
+      columnsName.push("Acción")
+      columnsName.forEach(col =>  $('#table thead tr').append(`<th scope="col">${col}</th>`))
+      const dataArray=data.map(item=> Object.values(item))
 
+      dataArray.forEach((row,i) => {
+        var tagRowStr=""
+
+        row.forEach((item,index)=>{
+
+          if(index)
+          tagRowStr+=`<td>${item}</td>`
+          else 
+          tagRowStr+= `<th scope="row">${item}</th>`
+        })
+        tagRowStr+=`<td  ><img   src="../statics/trash-solid.svg" height="20px"  /></td>`
+        const idRow="row"+i
+
+        $('#table tbody').append(`<tr id="${idRow}" >${tagRowStr}</tr>`)
+
+        $( `#${idRow}`).click({rowId:i, idTag:idRow},(event)=> {
+         alert( "Handler for .click() called. "+ event.data.idTag );
+         $(`#${event.data.idTag}`).remove();
+
+       });
+      })
+  
+    }
+  }
   function populateDataTable() {
     // Do some UI setup here: change the visible section and reinitialize the table
     var data= JSON.parse(localStorage.getItem("data"))

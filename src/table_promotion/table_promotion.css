@@ -19,3 +19,6 @@ body{
     height: 98%;
     display: flex;
 }
+img{
+    color: red;
+}
