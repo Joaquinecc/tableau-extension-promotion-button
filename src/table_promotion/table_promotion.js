@@ -32,6 +32,8 @@
   function populateDataTable2() {
     var data= JSON.parse(localStorage.getItem("data"))
     if (data?.length > 0){
+      $('#no_data_message').css('display', 'none');
+
       //columns
       let columnsName = Object.keys(data[0])
       columnsName.push("Acción")
@@ -48,25 +50,31 @@
           else 
           tagRowStr+= `<th scope="row">${item}</th>`
         })
-        tagRowStr+=`<td  ><img   src="../statics/trash-solid.svg" height="20px"  /></td>`
         const idRow="row"+i
 
-        $('#table tbody').append(`<tr id="${idRow}" >${tagRowStr}</tr>`)
+        tagRowStr+=`<td  id="${idRow}"><img   src="../statics/trash-solid.svg" height="20px"  /></td>`
 
-        $( `#${idRow}`).click({rowId:i, idTag:idRow},removeRow);
+        $('#table tbody').append(`<tr  >${tagRowStr}</tr>`)
+
+        $( `#${idRow}`).click({row:data[i], idTag:idRow},removeRow);
       })
   
-    }
+    } else {
+      // If we didn't get any rows back, there must be no marks selected
+      $('#no_data_message').css('display', 'inline');
+  }
   }
   function removeRow (event) {
     /**
-     * Remove ro, and update data
+     * Remove row, and update data
      * 
      */
     var data= JSON.parse(localStorage.getItem("data"))
-    data = data.filter((item,index) => index !==  event.data.rowId)
+    const row= event.data.row
+    console.log(row);
+    data = data.filter(item => item.cod_cliente != row.cod_cliente ||  item.articulocodigo != row.articulocodigo)
     localStorage.setItem("data",JSON.stringify(data))
-    $(`#${event.data.idTag}`).remove();
+    $(`#${event.data.idTag}`).parent("tr").remove();
 
   }
   function populateDataTable() {
@@ -76,11 +84,9 @@
     if (data?.length > 0) {
       $('#no_data_message').css('display', 'none');
       $('#data_table_wrapper').append(`<table id='data_table' class='table table-striped table-bordered'></table>`);
-
       // Do some math to compute the height we want the data table to be
       var top = $('#data_table_wrapper')[0].getBoundingClientRect().top;
       var height = $(document).height() - top - 130;
-
       // Initialize our data table with what we just gathered
       $('#data_table').DataTable({
         "data": data.map(item=> Object.values(item)),
@@ -91,7 +97,6 @@
           scrollY: height,
           scrollX: true,
           //headerCallback: headerCallback,
-          
           // dom: "<'row'<'col-sm-6'i><'col-sm-6'f>><'row'<'col-sm-12'tr>>" // Do some custom styling
       });
     } else {
