@@ -47,6 +47,7 @@
         var tagRowStr=""
         row.forEach((item,index)=>{
          if(index){
+           if(index == 9 ) item= item.toFixed(3)
           if(index != 8)   //exception - remove rank column
           tagRowStr+=`<td>${item}</td>`}
           else 
