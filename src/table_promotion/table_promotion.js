@@ -14,9 +14,9 @@
     
       };
       //localStorage.removeItem("data")
-        populateDataTable()
       //remove any initial data ,if it is there
       //localStorage.removeItem('data');
+      populateDataTable()
 
       // Tell Tableau we'd like to initialize our extension
       tableau.extensions.initializeAsync().then(function() {
@@ -29,11 +29,13 @@
     var data= JSON.parse(localStorage.getItem("data"))
     if (data?.length > 0){
       $('#no_data_message').css('display', 'none');
-
+      $('#table_wrapper').empty()
+      $('#table_wrapper').append(` <table id="table"class="table"> <thead><tr></tr> </thead><tbody> </tbody>  </table>`)
       //columns
       let columnsName = ["Cod Cliente", "Nombre completo","Artículocodigo","Descripción","Familia","Marca","Grupo","Linea","Peso","Acción"]
       columnsName.forEach(col =>  $('#table thead tr').append(`<th scope="col">${col}</th>`))
       const dataArray=data.map(item=> Object.values(item))
+      var height = $(document).height() - top - 130;
 
       dataArray.forEach((row,i) => {
         var tagRowStr=""
@@ -50,6 +52,22 @@
 
         $( `#${idRow}`).click({row:data[i], idTag:idRow},removeRow);
       })
+
+      $('#table').DataTable(  {
+        "language": {
+          "search": "Buscar",
+          "zeroRecords": "No se encontro nada",
+          "infoEmpty": "No se ha añadido nada al carrito",
+      },
+      autoWidth: false,
+      deferRender: true,
+      scroller: true,
+      scrollX: true,
+      scrollY: "70vh",
+
+    
+    
+    }     );
   
     } else {
       // If we didn't get any rows back, there must be no marks selected
@@ -63,7 +81,6 @@
      */
     var data= JSON.parse(localStorage.getItem("data"))
     const row= event.data.row
-    console.log(row);
     data = data.filter(item => item.cod_cliente != row.cod_cliente ||  item.articulocodigo != row.articulocodigo)
     localStorage.setItem("data",JSON.stringify(data))
     $(`#${event.data.idTag}`).parent("tr").remove();
