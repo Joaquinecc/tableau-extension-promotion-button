@@ -35,23 +35,16 @@
       $('#no_data_message').css('display', 'none');
 
       //columns
-      let columnsName = Object.keys(data[0])
-      //exception - remove rank column
-      columnsName= columnsName.filter(item => item != "SUMA(rank (ranking_combination_sku_&_fam))")
-      console.log("columnsName",columnsName);
-      columnsName.push("Acción")
+      let columnsName = ["Cod Cliente", "Nombre completo","Artículocodigo","Descripción","Familia","Marca","Grupo","Linea","Peso","Acción"]
       columnsName.forEach(col =>  $('#table thead tr').append(`<th scope="col">${col}</th>`))
       const dataArray=data.map(item=> Object.values(item))
 
       dataArray.forEach((row,i) => {
         var tagRowStr=""
         row.forEach((item,index)=>{
-         if(index){
+         if(index != 8){      //exception - remove rank column
            if(index == 9 ) item= item.toFixed(3)
-          if(index != 8)   //exception - remove rank column
           tagRowStr+=`<td>${item}</td>`}
-          else 
-          tagRowStr+= `<th scope="row">${item}</th>`
         })
         const idRow="row"+i
 
