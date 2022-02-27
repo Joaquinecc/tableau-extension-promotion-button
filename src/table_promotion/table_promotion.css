@@ -1,6 +1,7 @@
 
 body{
     height: 100%;
+    width: 100%;
 
 }
 .hidden{
@@ -20,4 +21,9 @@ img{
 }
 #table{
     color: #666666;
+}
+#no_data_message{
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }
