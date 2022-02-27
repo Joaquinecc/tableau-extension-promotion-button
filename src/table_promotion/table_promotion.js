@@ -53,14 +53,21 @@
 
         $('#table tbody').append(`<tr id="${idRow}" >${tagRowStr}</tr>`)
 
-        $( `#${idRow}`).click({rowId:i, idTag:idRow},(event)=> {
-         alert( "Handler for .click() called. "+ event.data.idTag );
-         $(`#${event.data.idTag}`).remove();
-
-       });
+        $( `#${idRow}`).click({rowId:i, idTag:idRow},removeRow);
       })
   
     }
+  }
+  function removeRow (event) {
+    /**
+     * Remove ro, and update data
+     * 
+     */
+    var data= JSON.parse(localStorage.getItem("data"))
+    data = data.filter((item,index) => index !==  event.data.rowId)
+    localStorage.setItem("data",JSON.stringify(data))
+    $(`#${event.data.idTag}`).remove();
+
   }
   function populateDataTable() {
     // Do some UI setup here: change the visible section and reinitialize the table
