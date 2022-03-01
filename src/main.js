@@ -85,7 +85,7 @@
         console.log(result);
         //remove local storage data
         localStorage.removeItem('data');
-        //update flag local variable, this force table_promotion to be updated
+        //Force LocalstorageChange event to be fire
         const update_flag= localStorage.getItem('update flag variable')
         localStorage.setItem('update flag variable', parseInt(update_flag)?0:1);
   

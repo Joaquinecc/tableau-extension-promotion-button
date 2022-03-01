@@ -50,7 +50,7 @@
 
         $('#table tbody').append(`<tr  >${tagRowStr}</tr>`)
 
-        $( `#${idRow}`).click({row:data[i], idTag:idRow},removeRow);
+        $( `#${idRow}`).click({row:data[i], idTag:idRow},deleteRow);
       })
 
       $('#table').DataTable(  {
@@ -74,7 +74,7 @@
       $('#no_data_message').css('display', 'flex');
   }
   }
-  function removeRow (event) {
+  function deleteRow (event) {
     /**
      * Remove row, and update data
      * 
@@ -83,6 +83,7 @@
     const row= event.data.row
     data = data.filter(item => item.cod_cliente != row.cod_cliente ||  item.articulocodigo != row.articulocodigo)
     localStorage.setItem("data",JSON.stringify(data))
+
     $(`#${event.data.idTag}`).parent("tr").remove();
 
   }
