@@ -7,7 +7,7 @@
     <author name="Joaquin Caballero" email="joaquinecc@gmail.com" organization="Dato" website="https://github.com/Joaquinecc"/>
     <min-api-version>0.6</min-api-version>
     <source-location>
-      <url>http://localhost:8765/src/button_add_cart/button_product.html</url>
+      <url>http://localhost:8765/src/button_add_cart/button_recomendation_list.html</url>
     </source-location>
     <icon></icon>
     <permissions>
