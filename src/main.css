@@ -1,12 +1,16 @@
-
+@font-face {
+    font-family: Tableu-book;
+    src:  url(statics/Tableau\ Book\ Regular.ttf);;
+  }
 body{
     display: flex;
     align-items: center; 
     height: 100vh;
     flex-direction: column;
     justify-content: space-around;
-
+    font-family: Tableu-book
 }
+
 .hidden{
     display: none;
 }
@@ -22,4 +26,7 @@ body{
 }
 #name-input{
     width: 100%;
+}
+h5{
+    font-weight: 600;
 }

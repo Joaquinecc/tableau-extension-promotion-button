@@ -1,6 +1,11 @@
-
+@font-face {
+    font-family: Tableu-book;
+    src:  url(statics/Tableau\ Book\ Regular.ttf);
+  }
 body{
     width: 100%;
+    font-family: Tableu-book
+
 
 }
 .hidden{
