@@ -15,7 +15,7 @@
       };
       //localStorage.removeItem("data")
       //remove any initial data ,if it is there
-      localStorage.removeItem('data');
+      //localStorage.removeItem('data');
       populateDataTable()
 
       // Tell Tableau we'd like to initialize our extension
@@ -34,11 +34,6 @@
       //columns
       let columnsName = ["Cod Cliente", "Nombre completo","Artículocodigo","Descripción","Familia","Marca","Grupo","Linea","Peso","Acción"]
       columnsName.forEach(col =>  $('#table thead tr').append(`<th scope="col">${col}</th>`))
-      const dataArray=data.map(item=> Object.values(item))
-      console.log("columnsName",columnsName.length);
-      console.log("data",data);
-      console.log("dataArray",dataArray);
-
       data.forEach((row,i) => {
         var tagRowStr=""
         tagRowStr+=`<td>${row.cod_cliente}</td>`
@@ -51,30 +46,25 @@
         tagRowStr+=`<td>${row["linea"]}</td>`
         tagRowStr+=`<td>${row["SUMA(weight (ranking_combination_sku_&_fam))"].toFixed(3)}</td>`
         const idRow="row"+i
-
         tagRowStr+=`<td  id="${idRow}"><img   src="../statics/trash-solid.svg" height="20px"  /></td>`
-
         $('#table tbody').append(`<tr  >${tagRowStr}</tr>`)
-
         $( `#${idRow}`).click({row:data[i], idTag:idRow},deleteRow);
       })
-
       $('#table').DataTable(  {
-        "language": {
-          "search": "Buscar",
-          "zeroRecords": "No se encontro nada",
-          "infoEmpty": "No se ha añadido nada al carrito",
-      },
-      autoWidth: false,
-      deferRender: true,
-      scroller: true,
-      scrollX: true,
-      scrollY: "70vh",
-
-    
-    
-    }     );
-  
+          "language": {
+            "search": "Buscar",
+            "zeroRecords": "No se encontro nada",
+            "infoEmpty": "No se ha añadido nada al carrito",
+        },
+          autoWidth: false,
+          deferRender: true,
+          scroller: true,
+          scrollX: true,
+          scrollY: "70vh",
+          "bInfo" : false,
+          dom: "<'row'<'col-sm-6'i><'col-sm-6'f>><'row'<'col-sm-12'tr>>" // Do some custom styling
+          
+        });
     } else {
       // If we didn't get any rows back, there must be no marks selected
       $('#no_data_message').css('display', 'flex');
