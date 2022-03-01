@@ -15,7 +15,7 @@
       };
       //localStorage.removeItem("data")
       //remove any initial data ,if it is there
-      //localStorage.removeItem('data');
+      localStorage.removeItem('data');
       populateDataTable()
 
       // Tell Tableau we'd like to initialize our extension
@@ -35,15 +35,21 @@
       let columnsName = ["Cod Cliente", "Nombre completo","Artículocodigo","Descripción","Familia","Marca","Grupo","Linea","Peso","Acción"]
       columnsName.forEach(col =>  $('#table thead tr').append(`<th scope="col">${col}</th>`))
       const dataArray=data.map(item=> Object.values(item))
-      var height = $(document).height() - top - 130;
+      console.log("columnsName",columnsName.length);
+      console.log("data",data);
+      console.log("dataArray",dataArray);
 
-      dataArray.forEach((row,i) => {
+      data.forEach((row,i) => {
         var tagRowStr=""
-        row.forEach((item,index)=>{
-         if(index != 8){      //exception - remove rank column
-           if(index == 9 ) item= item.toFixed(3)
-          tagRowStr+=`<td>${item}</td>`}
-        })
+        tagRowStr+=`<td>${row.cod_cliente}</td>`
+        tagRowStr+=`<td>${row["Nombre"]}</td>`
+        tagRowStr+=`<td>${row.articulocodigo}</td>`
+        tagRowStr+=`<td>${row["descripcion"]}</td>`
+        tagRowStr+=`<td>${row["familia (v_articulos)"]}</td>`
+        tagRowStr+=`<td>${row["marca"]}</td>`
+        tagRowStr+=`<td>${row["grupo"]}</td>`
+        tagRowStr+=`<td>${row["linea"]}</td>`
+        tagRowStr+=`<td>${row["SUMA(weight (ranking_combination_sku_&_fam))"].toFixed(3)}</td>`
         const idRow="row"+i
 
         tagRowStr+=`<td  id="${idRow}"><img   src="../statics/trash-solid.svg" height="20px"  /></td>`

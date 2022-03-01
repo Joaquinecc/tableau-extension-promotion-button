@@ -1,6 +1,6 @@
 @font-face {
     font-family: Tableu-book;
-    src:  url(statics/Tableau\ Book\ Regular.ttf);
+    src:  url(../statics/Tableau\ Book\ Regular.ttf);
   }
 body{
     width: 100%;
