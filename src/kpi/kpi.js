@@ -19,30 +19,46 @@
     });
 
     function updateValue(){
+        const data =JSON.parse(localStorage.getItem("data"))
         const type=$("#script_kpi")[0].getAttribute('kpi')
         if(type == "#recomendation")
-            cantRecomendation()
+            countRecomendation(data)
         else if ( type == "sell_oportunity" )
-            opSell()
+            sumOpSell(data)
+        else if ( type == "#clients" )
+            countClients(data)
     }
-    function opSell(){
-        const data =JSON.parse(localStorage.getItem("data"))
+    function sumOpSell(data){
+          /**
+         * Sum total op
+         */
         if(data?.length>0){
             $("#num").empty()
             $("#num").text(numberWithPoints(Math.round(data.reduce((partialSum, a) => partialSum + a["SUMA(precio_promedio)"], 0))))
             
         }
     }
-    function cantRecomendation(){
-        const data =JSON.parse(localStorage.getItem("data"))
+    function countRecomendation(data){
+        /**
+         * Count total recomendation
+         */
         if(data?.length>0){
             $("#num").empty()
             $("#num").text(numberWithPoints(data.length))
         }
     }
+    function countClients(data){
+        /**
+         * Count distinc cod client
+         */
+        if(data?.length>0){
+            $("#num").empty()
+            $("#num").text(numberWithPoints((new Set(data.map(item=> item.cod_cliente))).size))
+        }
+    }
     function numberWithPoints(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
- 
+    
  
 })();
