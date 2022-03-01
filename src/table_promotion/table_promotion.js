@@ -15,7 +15,7 @@
       };
       //localStorage.removeItem("data")
       //remove any initial data ,if it is there
-      //localStorage.removeItem('data');
+      localStorage.removeItem('data');
       populateDataTable()
 
       // Tell Tableau we'd like to initialize our extension
