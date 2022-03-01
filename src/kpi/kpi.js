@@ -27,6 +27,8 @@
             sumOpSell(data)
         else if ( type == "#clients" )
             countClients(data)
+        else if ( type == "#product" )
+        countProduct(data)
     }
     function sumOpSell(data){
           /**
@@ -49,11 +51,20 @@
     }
     function countClients(data){
         /**
-         * Count distinc cod client
+         * Count distinct cod client
          */
         if(data?.length>0){
             $("#num").empty()
             $("#num").text(numberWithPoints((new Set(data.map(item=> item.cod_cliente))).size))
+        }
+    }
+    function countProduct(data){
+        /**
+         * Count distinct product
+         */
+        if(data?.length>0){
+            $("#num").empty()
+            $("#num").text(numberWithPoints((new Set(data.map(item=> item.articulocodigo))).size))
         }
     }
     function numberWithPoints(x) {
