@@ -5,23 +5,30 @@
     var promotionName=""
     var currentUser=""
     var envVar =""
+    const workSheetTableName = "Carrito.Lista"
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
       getVarEnv()
-        // Add your startup code here
-        $("#btn-prom").click(function(){
-        
-          promotionName= $( "#name-input" ).val();
-          if(promotionName.length >0){
-  
-            loadTable()
+      //Listen on local storage
+      window.onstorage = () => {
+        // When local storage changes, update table
+        console.log("Storage value change Table Controller");
+        updateTableData(workSheetTableName)
+      };
+      $("#btn-prom").click(function(){
+        promotionName= $( "#name-input" ).val();
+        if(promotionName.length >0){
+          loadTable()
 
-          }
-          else alert("Ingresar un nombre a la promoción")
-        }); 
+        }
+        else alert("Ingresar un nombre a la promoción")
+      }); 
+
+       //remove any initial data ,if it is there
+       localStorage.removeItem('id_ranks');
       // Tell Tableau we'd like to initialize our extension
       tableau.extensions.initializeAsync().then(function() {
-
+        updateTableData(workSheetTableName)
         // Once the extension is initialized, ask the user to choose a sheet
         loadCurrentUser()
     });  
@@ -69,7 +76,14 @@
     });
 }
 
-
+function updateTableData(worksheetName){
+  let filtersArray =localStorage.getItem("id_ranks")?JSON.parse(localStorage.getItem("id_ranks")):[]
+  let typeFilter = filtersArray.length? tableau.FilterUpdateType.Add: tableau.FilterUpdateType.Replace
+  const worksheet=getSelectedSheet(worksheetName)
+ worksheet.applyFilterAsync("id_rank",filtersArray,typeFilter).then(filterName=>{
+    console.log("filterAplyied",filterName);
+  })  
+}
 
 
  function post(data){

@@ -7,29 +7,21 @@
     $(document).ready(function() {
         $("#btn-prom").click(function(){
           //update flag local variable, this force table_promotion to be updated
-          const update_flag= localStorage.getItem('update flag variable')
-          localStorage.setItem('update flag variable', parseInt(update_flag)?0:1);
-
           console.log("Click");
           loadData($("#script_button")[0].getAttribute('worksheetName'))
           alert("Se añadio al carro")
         }); 
-   
-      // Tell Tableau we'd like to initialize our extension
-      tableau.extensions.initializeAsync().then(function() {
-        // Once the extension is initialized, ask the user to choose a sheet
-        });  
+        tableau.extensions.initializeAsync().then(function() {
+            // Once the extension is initialized, ask the user to choose a sheet
+        });
     });
       
  function loadData(worksheetName){
      const worksheet = getSelectedSheet(worksheetName);
      worksheet.getSummaryDataAsync().then(function(dataTable ){
-      let data=dataTable._data.map(dataItem=>{
-        let temp={}
-        dataTable._columns.forEach((columnName,index)=>temp[columnName._fieldName]=dataItem[index]._value)
-        return temp
-      })
-      save(data)
+      let id_ranks=dataTable._data.map(dataItem=>dataItem[8].formattedValue)
+      console.log("id_ranks",id_ranks);
+      saveLocalStorage("id_ranks",id_ranks)
      });
 
 
@@ -41,13 +33,8 @@
   });
 }
 
- function save(data){
-  let oldData= localStorage.getItem('data');
-  if(oldData){
-    oldData=JSON.parse(oldData)
-    data = data.concat(oldData);
-  }
-  localStorage.setItem('data', JSON.stringify(data));
+ function saveLocalStorage(key,value){
+  localStorage.setItem(key, JSON.stringify(value));
  }
 
 
