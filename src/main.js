@@ -8,6 +8,7 @@
     const workSheetTableName = "Carrito.Lista"
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
+      //set envVar 
       getVarEnv()
       //Listen on local storage
       window.onstorage = () => {
@@ -15,11 +16,12 @@
         console.log("Storage value change Table Controller");
         updateTableData(workSheetTableName)
       };
+
       $("#btn-prom").click(function(){
+        //get custom name for the campain
         promotionName= $( "#name-input" ).val();
         if(promotionName.length >0){
-          loadTable()
-
+          createPromotion(workSheetTableName)
         }
         else alert("Ingresar un nombre a la promoción")
       }); 
@@ -31,7 +33,7 @@
         updateTableData(workSheetTableName)
         // Once the extension is initialized, ask the user to choose a sheet
         loadCurrentUser()
-    });  
+      });  
     });
     function loadCurrentUser(){
       try{
@@ -49,24 +51,30 @@
  
   }
 
-  function loadTable(){
-      let data = localStorage.getItem("data")
-      if(!data) alert("Tabla vacia")
-      console.log("data",JSON.parse(data));
-      data=JSON.parse(data)
+  function createPromotion(worksheetName){
+    const worksheet=getSelectedSheet(worksheetName)
+    worksheet.getSummaryDataAsync().then(dataTable => {
+      if(!dataTable.data) alert("Tabla vacia")
+      else{
+        const data=dataTable.data.map((dataItem )=>{
+          return {
+            cod_cliente:dataItem[0].value,
+            articulocodigo:dataItem[1].value,
+            rank:dataItem[8].value,
+            weight:dataItem[9].value,
+            prom_name:promotionName,
+            username:currentUser
+          }
+        });
 
-      data=data.map((dataItem )=>{
-        return {
-          cod_cliente:dataItem.cod_cliente,
-          articulocodigo:dataItem.articulocodigo,
-          rank:dataItem["SUMA(rank (ranking_combination_sku_&_fam))"],
-          weight:dataItem["SUMA(weight (ranking_combination_sku_&_fam))"],
-          prom_name:promotionName,
-          username:currentUser
-        }
-      });
-      post(data)
+        console.log("Post data",data);
+        post(data)
+  
+      }
+    
+    })
 
+     
 
   }
   function getSelectedSheet(worksheetName) {
@@ -87,6 +95,7 @@ function updateTableData(worksheetName){
 
 
  function post(data){
+   console.log("Post data",data);
   $('#loading').removeClass('hidden')
   $('#btn-label').addClass('hidden');
     $.ajax({
