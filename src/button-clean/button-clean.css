@@ -1,0 +1,18 @@
+@font-face {
+    font-family: Tableu-book;
+    src:  url(../statics/Tableau\ Book\ Regular.ttf);;
+  }
+body{
+  margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+#btn-clean{
+  cursor: pointer;
+    display: flex;
+    align-items: center; 
+    flex-direction: column;
+    justify-content: space-around;
+    font-family: Tableu-book
+}

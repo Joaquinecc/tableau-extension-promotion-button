@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest manifest-version="0.1" xmlns="http://www.tableau.com/xml/extension_manifest">
+  <dashboard-extension id="com.create.campaing.main" extension-version="0.1.0">
+    <default-locale>en_US</default-locale>
+    <name resource-id="name"/>
+    <description>Button - Limpiar</description>
+    <author name="Joaquin Caballero" email="joaquinecc@gmail.com" organization="Dato" website="https://github.com/Joaquinecc"/>
+    <min-api-version>0.6</min-api-version>
+    <source-location>
+      <url>http://localhost:8765/src/button-clean/button-clean.html</url>
+    </source-location>
+    <icon></icon>
+    <permissions>
+      <permission>full data</permission>
+    </permissions>
+  </dashboard-extension>
+  
+  <resources>
+    <resource id="name">
+      <text locale="en_US">Button - Limpiar</text>
+    </resource>
+  </resources>
+</manifest>
