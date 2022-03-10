@@ -69,7 +69,7 @@
     worksheet.getSummaryDataAsync().then(dataTable => {
       if(!dataTable.data) alert("Tabla vacia")
       else{
-        const data=constructData(dataTable).map((dataItem )=>{
+        const data=constructData2Object(dataTable).map((dataItem )=>{
           return {
             cod_cliente:dataItem["cod_cliente (ranking_combination_sku_&_fam)"],
             articulocodigo:dataItem["articulocodigo"],
