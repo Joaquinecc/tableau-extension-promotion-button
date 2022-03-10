@@ -50,26 +50,37 @@
  
  
   }
-
+  function constructData2Object(datatable){
+    /**
+     * Receive getSummaryDataAsync(). data, and transform to an array of object. Where each key of the object is a columns
+     */
+    const columns= datatable._columns.map(col=> col._fieldName)
+    const data=datatable._data.map(item=>{
+      let temp={}
+      Object.values(item).forEach((val,index) => temp[columns[index]]=val._value)
+      return temp
+    }
+      )
+      return data
+    
+  }
   function createPromotion(worksheetName){
     const worksheet=getSelectedSheet(worksheetName)
     worksheet.getSummaryDataAsync().then(dataTable => {
       if(!dataTable.data) alert("Tabla vacia")
       else{
-        const data=dataTable.data.map((dataItem )=>{
+        const data=constructData(dataTable).map((dataItem )=>{
           return {
-            cod_cliente:dataItem[0].value,
-            articulocodigo:dataItem[1].value,
-            rank:dataItem[8].value,
-            weight:dataItem[9].value,
+            cod_cliente:dataItem["cod_cliente (ranking_combination_sku_&_fam)"],
+            articulocodigo:dataItem["articulocodigo"],
+            rank:dataItem["SUMA(rank (ranking_combination_sku_&_fam))"],
+            weight:dataItem["SUMA(weight (ranking_combination_sku_&_fam))"],
             prom_name:promotionName,
             username:currentUser
           }
         });
-
         console.log("Post data",data);
-        post(data)
-  
+       post(data)
       }
     
     })
@@ -92,7 +103,6 @@ function updateTableData(worksheetName){
     console.log("filterAplyied",filterName);
   })  
 }
-
 
  function post(data){
    console.log("Post data",data);
@@ -124,22 +134,10 @@ function updateTableData(worksheetName){
   });
  }
 
-
-
   function getVarEnv(){
     $.getJSON( "../var-env.json", function( data ) {
       envVar= data
     })
 
   }
-
-
-
-
-
-
-   
-     //"api_url":"http://10.35.70.39:8000/promotion/"
-
- 
 })();
