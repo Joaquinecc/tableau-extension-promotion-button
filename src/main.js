@@ -10,12 +10,6 @@
     $(document).ready(function() {
       //set envVar 
       getVarEnv()
-      //Listen on local storage
-      window.onstorage = () => {
-        // When local storage changes, update table
-        console.log("Storage value change Table Controller");
-        updateTableData(workSheetTableName)
-      };
 
       $("#btn-prom").click(function(){
         //get custom name for the campain
@@ -30,25 +24,20 @@
        localStorage.removeItem('id_ranks');
       // Tell Tableau we'd like to initialize our extension
       tableau.extensions.initializeAsync().then(function() {
-        updateTableData(workSheetTableName)
         // Once the extension is initialized, ask the user to choose a sheet
         loadCurrentUser()
       });  
     });
-    function loadCurrentUser(){
-      try{
-        const worksheetName= "currentUserSheet"
-        const worksheet = getSelectedSheet(worksheetName);
-        
-        worksheet.getSummaryDataAsync().then(function(userData ){
-          currentUser= userData.data[0][0]._value 
-          
-        });
-      }catch{
-        return "not-found"
-      }
- 
- 
+  function loadCurrentUser(){
+    try{
+      const worksheetName= "currentUserSheet"
+      const worksheet = getSelectedSheet(worksheetName);
+      worksheet.getSummaryDataAsync().then(function(userData ){
+        currentUser= userData.data[0][0]._value 
+      });
+    }catch{
+      return "not-found"
+    }
   }
   function constructData2Object(datatable){
     /**
@@ -62,7 +51,6 @@
     }
       )
       return data
-    
   }
   function createPromotion(worksheetName){
     const worksheet=getSelectedSheet(worksheetName)
@@ -93,15 +81,6 @@
     return tableau.extensions.dashboardContent.dashboard.worksheets.find(function(sheet) {
         return sheet.name === worksheetName;
     });
-}
-
-function updateTableData(worksheetName){
-  let filtersArray =localStorage.getItem("id_ranks")?JSON.parse(localStorage.getItem("id_ranks")):[]
-  let typeFilter = filtersArray.length? tableau.FilterUpdateType.Add: tableau.FilterUpdateType.Replace
-  const worksheet=getSelectedSheet(worksheetName)
- worksheet.applyFilterAsync("id_rank",filtersArray,typeFilter).then(filterName=>{
-    console.log("filterAplyied",filterName);
-  })  
 }
 
  function post(data){
