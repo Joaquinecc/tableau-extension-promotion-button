@@ -21,7 +21,6 @@
       }); 
 
        //remove any initial data ,if it is there
-       localStorage.removeItem('id_ranks');
       // Tell Tableau we'd like to initialize our extension
       tableau.extensions.initializeAsync().then(function() {
         // Once the extension is initialized, ask the user to choose a sheet
@@ -95,12 +94,6 @@
       success: function (result) {
         alert("La solicitud se completo con éxito")
         console.log(result);
-        //remove local storage data
-        localStorage.removeItem('data');
-        //Force LocalstorageChange event to be fire
-        const update_flag= localStorage.getItem('update flag variable')
-        localStorage.setItem('update flag variable', parseInt(update_flag)?0:1);
-  
         $('#loading').addClass('hidden')
         $('#btn-label').removeClass('hidden');
       },
