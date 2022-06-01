@@ -9,6 +9,7 @@
         //update flag local variable, this force table_promotion to be updated
         console.log("Clean");
         const worksheet=getSelectedSheet(workSheetTableName)
+        //Clean sheet
         worksheet.applyFilterAsync("id_rank",[],tableau.FilterUpdateType.Replace).then(filterName=>{
           console.log("filterAplyied",filterName);
         })  
