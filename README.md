@@ -1,6 +1,12 @@
 # Tableu Extension - Create Promotion
 JS component to extend Tableau functionality to act as a CART system . The user select a set of filter in different sheet to select a set of recomendation, then decide if they want to add the cart.
 A sheet called "Carrito.Lista" Containing all recomendation selected. After that the user, then can decide to create a campaing with all item in the CART.
+
+## Component
+- Main: Create the promotion. The componet is compose with a textbox-input(campaing name) and button input. 
+- Cart button: Input button to accept al filter selected. 4 differen button has been developed, each one for different sheet
+- Clean button: Clean all recomendation selected.  It is represented as a Trash Icon
+
 ## Setup and Running 
 
 ### Prerequisites
