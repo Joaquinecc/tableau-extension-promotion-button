@@ -2,17 +2,20 @@
 
 // Wrap everything in an anonymous function to avoid polluting the global namespace
 (function() {
+    //Global variable to store the promotion name
     var promotionName=""
+    //Global variable to store the username
     var currentUser=""
+    //Global variable to store the enviroment variable located in var-env.json
     var envVar =""
     const workSheetTableName = "Carrito.Lista"
     // Use the jQuery document ready signal to know when everything has been initialized
     $(document).ready(function() {
-      //set envVar 
+      //Get enviroment variable 
       getVarEnv()
 
       $("#btn-prom").click(function(){
-        //get custom name for the campain
+        //get custom name for the campaing
         promotionName= $( "#name-input" ).val();
         if(promotionName.length >0){
           createPromotion(workSheetTableName)
@@ -27,7 +30,12 @@
         loadCurrentUser()
       });  
     });
+
+  //Save on global variable currentUser the username.
   function loadCurrentUser(){
+    /**
+     * A worksheet name currentUserSheet is in hidden in the dashboard to gather the user information
+     */
     try{
       const worksheetName= "currentUserSheet"
       const worksheet = getSelectedSheet(worksheetName);
@@ -52,6 +60,9 @@
       return data
   }
   function createPromotion(worksheetName){
+    /**
+     * Extract the data from the the cart table, transform it and sent.
+     */
     const worksheet=getSelectedSheet(worksheetName)
     worksheet.getSummaryDataAsync().then(dataTable => {
       if(!dataTable.data) alert("Tabla vacia")
@@ -107,6 +118,7 @@
  }
 
   function getVarEnv(){
+    //Get enviromental information
     $.getJSON( "../var-env.json", function( data ) {
       envVar= data
     })
