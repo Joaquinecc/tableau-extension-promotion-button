@@ -1,5 +1,6 @@
 # Tableu Extension - Create Promotion
-Post https request of  the Dasboard filter data
+JS component to extend Tableau functionality to act as a CART system . The user select a set of filter in different sheet to select a set of recomendation, then decide if they want to add the cart.
+A sheet called "Carrito.Lista" Containing all recomendation selected. After that the user, then can decide to create a campaing with all item in the CART.
 ## Setup and Running 
 
 ### Prerequisites
